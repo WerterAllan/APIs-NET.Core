@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WerterStore.Domain.StoreContext
+namespace WerterStore.Domain.StoreContext.Entities
 {
     public class Customer 
     {

@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="InventoryContext\" />
-    <Folder Include="FinancialContext\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Flunt" Version="1.0.2" />
   </ItemGroup>
 

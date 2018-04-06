@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WerterStore.Domain.StoreContext
+namespace WerterStore.Domain.StoreContext.Entities
 {
     public class Product
     {
