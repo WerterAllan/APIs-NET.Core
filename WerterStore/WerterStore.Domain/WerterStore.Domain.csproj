@@ -8,4 +8,8 @@
     <PackageReference Include="Flunt" Version="1.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StoreContext\" />
+  </ItemGroup>
+
 </Project>

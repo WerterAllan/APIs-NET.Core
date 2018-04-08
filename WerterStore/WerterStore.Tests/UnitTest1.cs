@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WerterStore.Domain.StoreContext.Entities;
 
 namespace WerterStore.Tests
 {
@@ -8,6 +9,7 @@ namespace WerterStore.Tests
         [TestMethod]
         public void TestMethod1()
         {
+            //var customer = new Customer()
         }
     }
 }
