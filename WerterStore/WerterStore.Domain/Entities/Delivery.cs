@@ -15,5 +15,16 @@ namespace WerterStore.Domain.StoreContext.Entities
             EstimatedDeliveryDate = estimatedDeliveryDAte;
             Status = EDeliveryStatus.Waiting;
         }
+
+        public void Ship()
+        {
+            Status = EDeliveryStatus.Shipped;
+
+        }
+
+        public void Cancel()
+        {
+            // 
+        }
     }
 }

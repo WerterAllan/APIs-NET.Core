@@ -1,8 +1,9 @@
-﻿using WerterStore.Domain.Enums;
+﻿using Flunt.Notifications;
+using WerterStore.Domain.Enums;
 
 namespace WerterStore.Domain.Entities
 {
-    public class Address
+    public class Address : Notifiable
     {
         public Address(string street, 
             string number, 
@@ -34,5 +35,10 @@ namespace WerterStore.Domain.Entities
         public string Country { get; private set; }
         public string ZipCode { get; private set; }
         public EAddressType Type { get; private set; }
+
+        public override string ToString()
+        {
+            return $"{Street}, {Number} - {District} - {City}";
+        }
     }
 }
