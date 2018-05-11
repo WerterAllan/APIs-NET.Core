@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="StoreContext\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WerterStore.Shared\WerterStore.Shared.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Flunt.Notifications;
+﻿using Bogus;
+using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,12 @@ namespace WerterStore.Tests
     public abstract class TestBase
     {
         public const string Email_Fake = "werter@wertersa.com.br";
+        public Faker Fake { get; }
+
+        public TestBase()
+        {
+            Fake = new Faker("pt_BR");
+        }
         public string ExtractNotifications(IReadOnlyCollection<Notification> notifications)
         {
 

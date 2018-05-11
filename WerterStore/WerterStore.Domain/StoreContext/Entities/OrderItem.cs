@@ -14,6 +14,8 @@ namespace WerterStore.Domain.StoreContext.Entities
             AddNotifications(new Contract()
                 .IsLowerThan(product.QuantityOnHand, Quantity, "Quantity", "Produto fora de estoque"));
 
+
+
         }
 
         public Product Product { get; private set; }

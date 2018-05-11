@@ -26,7 +26,7 @@ namespace WerterStore.Domain.StoreContext.Entities
         public EOrderStatus Status { get; private set; }
 
         private Queue<OrderItem> _items;
-        public IReadOnlyCollection<OrderItem> Items => _items.ToList(); 
+        //public IReadOnlyCollection<OrderItem> Items => _items.ToList(); 
         private IList<Delivery> _deliveries;
         public IReadOnlyCollection<Delivery> Deliveries => _deliveries.ToList();
       
@@ -42,7 +42,7 @@ namespace WerterStore.Domain.StoreContext.Entities
                 .ToUpper();
 
             AddNotifications(new Contract()
-               .AreNotEquals(_items.Count, 0, "Order", "Este pedido não possui itens"));
+               .IsGreaterThan(_items.Count, 0, "Order", "Este pedido não possui itens"));
 
         }
 
@@ -70,7 +70,7 @@ namespace WerterStore.Domain.StoreContext.Entities
         public void AddItem(Product product, decimal quantity)
         {            
             AddNotifications(new Contract()
-               .IsGreaterThan(product.QuantityOnHand, quantity, "Order", $"Produto {product.Title} não tem {quantity} itens em estoque."));
+               .IsGreaterOrEqualsThan(product.QuantityOnHand, quantity, "Order", $"Produto {product.Title} não tem {quantity} itens em estoque."));
 
             this._items.Enqueue(new OrderItem(product, quantity));
         }
@@ -87,6 +87,8 @@ namespace WerterStore.Domain.StoreContext.Entities
                 delivery.Cancel();
             
         }
+
+        
 
 
 

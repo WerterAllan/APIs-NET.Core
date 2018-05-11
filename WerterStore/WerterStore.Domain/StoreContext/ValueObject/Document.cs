@@ -1,7 +1,7 @@
 ﻿using Flunt.Notifications;
 using Flunt.Validations;
 
-namespace WerterStore.Domain.ValueObject
+namespace WerterStore.Domain.StoreContext.ValueObject
 {
     public class Document : Notifiable
     {

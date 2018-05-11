@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WerterStore.Domain.StoreContext.Entities;
-using WerterStore.Domain.ValueObject;
+using WerterStore.Domain.StoreContext.ValueObject;
 
 namespace WerterStore.Domain.FluentBuilder
 {

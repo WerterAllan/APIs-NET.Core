@@ -1,7 +1,7 @@
 ﻿using Flunt.Notifications;
-using WerterStore.Domain.Enums;
+using WerterStore.Domain.StoreContext.Enums;
 
-namespace WerterStore.Domain.Entities
+namespace WerterStore.Domain.StoreContext.Entities
 {
     public class Address : Notifiable
     {

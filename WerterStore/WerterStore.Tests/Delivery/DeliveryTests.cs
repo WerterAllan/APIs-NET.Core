@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WerterStore.Domain.FluentBuilder;
 using WerterStore.Domain.StoreContext.Entities;
+using Bogus.Extensions.Brazil;
 
 namespace WerterStore.Tests.Delivery
 {
@@ -12,28 +13,36 @@ namespace WerterStore.Tests.Delivery
         private OrderBuilder MontarPedidoBasico()
         {
             return new OrderBuilder()
-               .Name("Werter", "Bonfim")
-               .Document("12345678900")
-               .Email("hello@wertersa.io")
-               .Phone("11999995309");
+               .Name( Fake.Person.FirstName , Fake.Person.LastName)               
+               .Document(Fake.Person.Cpf())
+               .Email(Fake.Person.Email)
+               .Phone(Fake.Person.Phone);
         }
 
         private Product UmProdutoComEstoque(int quantidadeEmEstoque)
         {
-            return new Product("produto qualquer", "descrição", "asdf", 10, quantidadeEmEstoque);
+            return new Product(Fake.Commerce.ProductName(), Fake.Lorem.Paragraph(1) , "asdf", Fake.Random.Decimal(10, 4000), quantidadeEmEstoque);
         }
 
+        /// <summary>
+        /// Deve retornar esta notificação: 'Este pedido não possui itens'
+        /// </summary>
         [TestMethod]
         public void PedidoSemItens_DeveRetornarUmaNotificacao()
         {
             var order = MontarPedidoBasico()
                 .Build();
+            order.Place();
             order.Invalid.Should().BeTrue(ExtractNotifications(order.Notifications));
         }
 
-
+        /// <summary>
+        /// Um pedido com 3 produtos, com um item de cada produto,
+        /// cada produto tem 1 item em estoque. deve realizar o pedido
+        /// com sucesso
+        /// </summary>
         [TestMethod]
-        public void Teste1()
+        public void RealizarUmPedido()
         {
             var order = MontarPedidoBasico()
                 .AddProduct("Gigabyte GA-H97N-WIFI", "placa-mãe da Gigabyte", "image.png", 652.9M, 1, 1)
@@ -44,19 +53,15 @@ namespace WerterStore.Tests.Delivery
             // Realiza o pedido
             order.Place();
 
-            // Simula o pagamento
-            order.Pay();
+            order.Valid.Should().BeTrue(ExtractNotifications(order.Notifications));
 
-            // Simula o envio
-            order.Ship();
-
-            // Simula o cancelamento
-            order.Cancel();
 
         }
 
+
+
         [TestMethod]
-        public void PedidoComMaisItensQueOEstoque_DeveRetornarUmaNotificação()
+        public void PedidoComMaisItensQueOEstoque()
         {
 
             var pedido = MontarPedidoBasico()
@@ -64,8 +69,22 @@ namespace WerterStore.Tests.Delivery
                 .Build();
 
             pedido.Invalid.Should().BeTrue(ExtractNotifications(pedido.Notifications));
-
             
+        }
+
+        [TestMethod]
+        public void PedidoEfetuadoComSucesso()
+        {
+            var pedido = MontarPedidoBasico()
+                .AddProduct(UmProdutoComEstoque(20), 10)
+                .Build();
+
+            // Realiza o pedido
+            pedido.Place();            
+            
+
+            pedido.Valid.Should().BeTrue(ExtractNotifications(pedido.Notifications));
+
         }
     }
 }

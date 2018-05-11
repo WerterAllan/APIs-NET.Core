@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WerterStore.Domain.Enums
+namespace WerterStore.Domain.StoreContext.Enums
 {
     public enum EAddressType
     {

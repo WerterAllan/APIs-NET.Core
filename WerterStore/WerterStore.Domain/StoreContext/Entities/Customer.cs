@@ -1,9 +1,7 @@
 ﻿using Flunt.Notifications;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using WerterStore.Domain.Entities;
-using WerterStore.Domain.ValueObject;
+using WerterStore.Domain.StoreContext.ValueObject;
 
 namespace WerterStore.Domain.StoreContext.Entities
 {
