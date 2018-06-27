@@ -1,4 +1,4 @@
-﻿namespace WerterStore.Domain.FluentBuilder
+﻿namespace WerterStore.Domain.StoreContext.FluentBuilder
 {
     public abstract class FluentBuilderBase<T> where T : class
     {

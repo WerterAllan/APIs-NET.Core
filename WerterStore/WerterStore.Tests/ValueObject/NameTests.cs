@@ -11,14 +11,14 @@ namespace WerterStore.Tests.ValueObject
         public void NomeValido()
         {
             var nome = new Name("Werter", "Bonfim");
-            nome.Valid.Should().BeTrue(ExtractNotifications(nome.Notifications));
+            nome.Valid.Should().BeTrue(ExtractNotifications(nome));
         }
 
         [TestMethod]
         public void NomeInvalido()
         {
             var nome = new Name("", "falso");
-            nome.Invalid.Should().BeTrue(ExtractNotifications(nome.Notifications));
+            nome.Invalid.Should().BeTrue(ExtractNotifications(nome));
         }
     }
 }

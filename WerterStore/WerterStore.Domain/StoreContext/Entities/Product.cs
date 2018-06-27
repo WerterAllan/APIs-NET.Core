@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WerterStore.Domain.StoreContext.Entities
+﻿namespace WerterStore.Domain.StoreContext.Entities
 {
     public class Product
     {
@@ -25,6 +21,16 @@ namespace WerterStore.Domain.StoreContext.Entities
         public override string ToString()
         {
             return Title;
+        }
+
+        public void RemoveFromStock(int quantity)
+        {
+            QuantityOnHand -= quantity;
+        }
+
+        internal void ReturnToStock(int quantity)
+        {
+            QuantityOnHand += quantity;
         }
     }
 }

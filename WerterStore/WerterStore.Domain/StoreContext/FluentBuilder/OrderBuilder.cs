@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using WerterStore.Domain.StoreContext.Entities;
 using WerterStore.Domain.StoreContext.ValueObject;
 
-namespace WerterStore.Domain.FluentBuilder
+namespace WerterStore.Domain.StoreContext.FluentBuilder
 {
     public sealed class OrderBuilder : FluentBuilderBase<Order>
     {

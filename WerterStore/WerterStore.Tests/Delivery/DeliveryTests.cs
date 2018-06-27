@@ -1,8 +1,5 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WerterStore.Domain.FluentBuilder;
-using WerterStore.Domain.StoreContext.Entities;
-using Bogus.Extensions.Brazil;
 
 namespace WerterStore.Tests.Delivery
 {
@@ -10,19 +7,9 @@ namespace WerterStore.Tests.Delivery
     public class DeliveryTests : TestBase
     {
 
-        private OrderBuilder MontarPedidoBasico()
-        {
-            return new OrderBuilder()
-               .Name( Fake.Person.FirstName , Fake.Person.LastName)               
-               .Document(Fake.Person.Cpf())
-               .Email(Fake.Person.Email)
-               .Phone(Fake.Person.Phone);
-        }
+       
 
-        private Product UmProdutoComEstoque(int quantidadeEmEstoque)
-        {
-            return new Product(Fake.Commerce.ProductName(), Fake.Lorem.Paragraph(1) , "asdf", Fake.Random.Decimal(10, 4000), quantidadeEmEstoque);
-        }
+       
 
         /// <summary>
         /// Deve retornar esta notificação: 'Este pedido não possui itens'
@@ -33,7 +20,7 @@ namespace WerterStore.Tests.Delivery
             var order = MontarPedidoBasico()
                 .Build();
             order.Place();
-            order.Invalid.Should().BeTrue(ExtractNotifications(order.Notifications));
+            order.Invalid.Should().BeTrue(ExtractNotifications(order));
         }
 
         /// <summary>
@@ -53,7 +40,7 @@ namespace WerterStore.Tests.Delivery
             // Realiza o pedido
             order.Place();
 
-            order.Valid.Should().BeTrue(ExtractNotifications(order.Notifications));
+            order.Valid.Should().BeTrue(ExtractNotifications(order));
 
 
         }
@@ -68,7 +55,7 @@ namespace WerterStore.Tests.Delivery
                 .AddProduct(UmProdutoComEstoque(10), 20)
                 .Build();
 
-            pedido.Invalid.Should().BeTrue(ExtractNotifications(pedido.Notifications));
+            pedido.Invalid.Should().BeTrue(ExtractNotifications(pedido));
             
         }
 
@@ -83,7 +70,7 @@ namespace WerterStore.Tests.Delivery
             pedido.Place();            
             
 
-            pedido.Valid.Should().BeTrue(ExtractNotifications(pedido.Notifications));
+            pedido.Valid.Should().BeTrue(ExtractNotifications(pedido));
 
         }
     }

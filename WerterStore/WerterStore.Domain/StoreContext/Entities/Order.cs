@@ -13,10 +13,10 @@ namespace WerterStore.Domain.StoreContext.Entities
         public Order(Customer customer)
         {
             Customer = customer;
-            
+
             Status = EOrderStatus.Created;
             _items = new Queue<OrderItem>();
-            _deliveries = new List<Delivery>();            
+            _deliveries = new List<Delivery>();
 
         }
 
@@ -26,10 +26,10 @@ namespace WerterStore.Domain.StoreContext.Entities
         public EOrderStatus Status { get; private set; }
 
         private Queue<OrderItem> _items;
-        //public IReadOnlyCollection<OrderItem> Items => _items.ToList(); 
+        public IReadOnlyCollection<OrderItem> Items => _items.ToList();
         private IList<Delivery> _deliveries;
         public IReadOnlyCollection<Delivery> Deliveries => _deliveries.ToList();
-      
+
         /// <summary>
         /// Cria um pedido
         /// </summary>
@@ -51,24 +51,29 @@ namespace WerterStore.Domain.StoreContext.Entities
         /// </summary>
         public void Pay()
         {
-            Status = EOrderStatus.Paid;
-            
+            if (string.IsNullOrEmpty(Number))
+            {
+                AddNotifications(new Contract()
+                   .IsNotNullOrEmpty(Number, "Number", "Não foi criado um numero de pedido"));
+                return;
+            }
 
+            Status = EOrderStatus.Paid;
         }
         public void Ship()
         {
-            
+
             var packageForDelivery = _items.DequeueChunk(5);
             foreach (var item in packageForDelivery)
                 AddDelivery(new Delivery(DateTime.Now.AddDays(5)));
 
             foreach (var delivery in _deliveries)
-                delivery.Ship();            
+                delivery.Ship();
 
         }
 
-        public void AddItem(Product product, decimal quantity)
-        {            
+        public void AddItem(Product product, int quantity)
+        {
             AddNotifications(new Contract()
                .IsGreaterOrEqualsThan(product.QuantityOnHand, quantity, "Order", $"Produto {product.Title} não tem {quantity} itens em estoque."));
 
@@ -83,12 +88,23 @@ namespace WerterStore.Domain.StoreContext.Entities
         public void Cancel()
         {
             Status = EOrderStatus.Cancelad;
-            foreach (var delivery in Deliveries)
-                delivery.Cancel();
-            
+            CancelDeliverys();
+            ReturnItensToStock();
+
         }
 
-        
+        private void ReturnItensToStock()
+        {
+            foreach (var item in _items)
+                item.Product.ReturnToStock(item.Quantity);
+        }
+
+        private void CancelDeliverys()
+        {
+            foreach (var delivery in Deliveries)
+                delivery.Cancel();
+        }
+
 
 
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using WerterStore.Domain.StoreContext.Enums;
 
 namespace WerterStore.Domain.StoreContext.Entities
@@ -9,11 +11,15 @@ namespace WerterStore.Domain.StoreContext.Entities
         public DateTime EstimatedDeliveryDate { get; private set; }
         public EDeliveryStatus Status { get; private set; }
 
-        public Delivery(DateTime estimatedDeliveryDAte)
+        public IList<OrderItem> Itens { get; private set; }
+
+
+        public Delivery(DateTime estimatedDeliveryDate, IList<OrderItem> itens)
         {
             CreateDate = DateTime.Now;
-            EstimatedDeliveryDate = estimatedDeliveryDAte;
+            EstimatedDeliveryDate = estimatedDeliveryDate;
             Status = EDeliveryStatus.Waiting;
+            Itens = itens;
         }
 
         public void Ship()

@@ -26,7 +26,7 @@ namespace WerterStore.Tests
         public void Rascunho()
         {
             var teste = new Testes();
-            teste.Invalid.Should().BeTrue(ExtractNotifications(teste.Notifications));
+            teste.Invalid.Should().BeTrue(ExtractNotifications(teste));
         }
     }
 }

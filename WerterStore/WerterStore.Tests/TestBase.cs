@@ -3,6 +3,9 @@ using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WerterStore.Domain.StoreContext.FluentBuilder;
+using Bogus.Extensions.Brazil;
+using WerterStore.Domain.StoreContext.Entities;
 
 namespace WerterStore.Tests
 {
@@ -15,10 +18,31 @@ namespace WerterStore.Tests
         {
             Fake = new Faker("pt_BR");
         }
-        public string ExtractNotifications(IReadOnlyCollection<Notification> notifications)
+        public OrderBuilder MontarPedidoBasico()
+        {
+            return new OrderBuilder()
+               .Name(Fake.Person.FirstName, Fake.Person.LastName)
+               .Document(Fake.Person.Cpf())
+               .Email(Fake.Person.Email)
+               .Phone(Fake.Person.Phone);
+        }
+
+        public Product UmProdutoComEstoque(int quantidadeEmEstoque)
+        {
+            return new Product(Fake.Commerce.ProductName(), Fake.Lorem.Paragraph(1), "asdf", Fake.Random.Decimal(10, 4000), quantidadeEmEstoque);
+        }
+
+        public Order MontarUmPedidoSimples()
+        {
+            return MontarPedidoBasico()
+                            .AddProduct(UmProdutoComEstoque(20), 5)
+                            .Build();
+        }
+
+        public string ExtractNotifications<T>(T objetoNotificavel) where T : Notifiable
         {
 
-            var descriptions = notifications
+            var descriptions = objetoNotificavel.Notifications
                 .Select(x => $"Property: {x.Property} Message: {x.Message}")
                 .ToList();
 
